@@ -36,12 +36,12 @@ func reactionResultLength(polymer []byte) int {
 
 	for canReact == true {
 		successfulRound = false
-		for i := 0; i < len(polymer) - 1; i++ {
-	        if react(string(polymer[i]), string(polymer[i + 1])) {
-	        	polymer = append(polymer[:i], polymer[i + 2:]...)
-	        	successfulRound = true
+		for i := 0; i < len(polymer)-1; i++ {
+			if react(string(polymer[i]), string(polymer[i+1])) {
+				polymer = append(polymer[:i], polymer[i+2:]...)
+				successfulRound = true
 			}
-	    }	
+		}
 		if successfulRound != true || len(polymer) <= 1 {
 			canReact = false
 		}
@@ -53,7 +53,7 @@ func reactionResultLength(polymer []byte) int {
 func removeLetter(polymer []byte, letter byte) []byte {
 	var newPolymer []byte
 
-	for i := 0; i < len(polymer) - 1; i++ {
+	for i := 0; i < len(polymer)-1; i++ {
 		if polymer[i] != letter && string(polymer[i]) != strings.ToUpper(string(letter)) {
 			newPolymer = append(newPolymer, polymer[i])
 		}
@@ -78,6 +78,6 @@ func main() {
 			min_count = count
 		}
 	}
-	
+
 	print(min_count)
 }

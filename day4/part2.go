@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 	"sort"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 // input format: [1518-06-23 00:43] wakes up
@@ -14,43 +14,43 @@ import (
 
 func get_input() []string {
 	file, err := os.Open("input.txt")
-		if err != nil {
-			fmt.Print(err)
-		}
+	if err != nil {
+		fmt.Print(err)
+	}
 
-		scanner := bufio.NewScanner(file)
-		scanner.Split(bufio.ScanLines)
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
 
-		var lines []string
+	var lines []string
 
-		for scanner.Scan() {
-			lines = append(lines, scanner.Text())
-		}
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
 
-    sort.Strings(lines)
-	
-    return lines
+	sort.Strings(lines)
+
+	return lines
 }
 
 func get_most_common(guard_minutes map[string]int) string {
 	most_common := ""
 	max_count := 0
 
-	for key, count := range guard_minutes { 
-    	if count > max_count {
-    		most_common = key
-    		max_count = count
-    	}
+	for key, count := range guard_minutes {
+		if count > max_count {
+			most_common = key
+			max_count = count
+		}
 	}
-	
+
 	return most_common
 }
 
 func get_guard_minutes(lines []string) map[string]int {
 	guard_minute_map := make(map[string]int)
-    begin_asleep := 0
-    guard := ""
-    tmp := ""
+	begin_asleep := 0
+	guard := ""
+	tmp := ""
 
 	for _, line := range lines {
 
@@ -58,16 +58,16 @@ func get_guard_minutes(lines []string) map[string]int {
 		time := strings.Split(date, " ")[1]
 		minute, _ := strconv.Atoi(time[3:5])
 		text := line[19:len(line)]
-		
+
 		if strings.HasPrefix(text, "Guard") {
-            guard = strings.Split(text, " ")[1]
+			guard = strings.Split(text, " ")[1]
 			begin_asleep = 0
 		} else if text == "falls asleep" {
 			begin_asleep = minute
 		} else {
 			for i := begin_asleep; i < minute; i++ {
-                tmp = strconv.Itoa(i)
-				guard_minute_map[guard + " " + tmp] += 1
+				tmp = strconv.Itoa(i)
+				guard_minute_map[guard+" "+tmp] += 1
 			}
 		}
 	}
@@ -82,10 +82,10 @@ func main() {
 
 	most_common := get_most_common(guard_minutes)
 
-    parts := strings.Split(most_common, " ")
-    guard, _ := strconv.Atoi(parts[0][1:])
-    minute, _ := strconv.Atoi(parts[1])
+	parts := strings.Split(most_common, " ")
+	guard, _ := strconv.Atoi(parts[0][1:])
+	minute, _ := strconv.Atoi(parts[1])
 
-	fmt.Print(most_common, "\n", guard * minute)
+	fmt.Print(most_common, "\n", guard*minute)
 
 }

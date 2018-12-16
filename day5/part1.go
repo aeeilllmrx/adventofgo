@@ -37,12 +37,12 @@ func main() {
 
 	for canReact == true {
 		successfulRound = false
-		for i := 0; i < len(data) - 1; i++ {
-	        if react(string(data[i]), string(data[i + 1])) {
-	        	data = append(data[:i], data[i + 2:]...)
-	        	successfulRound = true
+		for i := 0; i < len(data)-1; i++ {
+			if react(string(data[i]), string(data[i+1])) {
+				data = append(data[:i], data[i+2:]...)
+				successfulRound = true
 			}
-	    }	
+		}
 		if successfulRound != true || len(data) <= 1 {
 			canReact = false
 		}

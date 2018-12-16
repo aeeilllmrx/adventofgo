@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 	"sort"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 // input format: [1518-06-23 00:43] wakes up
@@ -14,18 +14,18 @@ import (
 
 func get_input() []string {
 	file, err := os.Open("input.txt")
-		if err != nil {
-			fmt.Print(err)
-		}
+	if err != nil {
+		fmt.Print(err)
+	}
 
-		scanner := bufio.NewScanner(file)
-		scanner.Split(bufio.ScanLines)
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
 
-		var lines []string
+	var lines []string
 
-		for scanner.Scan() {
-			lines = append(lines, scanner.Text())
-		}
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
 	return lines
 }
 
@@ -34,7 +34,7 @@ func sort_lines(lines []string) []string {
 	return lines
 }
 
-func get_sleep_times(sorted_lines []string) map[string]int{
+func get_sleep_times(sorted_lines []string) map[string]int {
 	time_asleep := make(map[string]int)
 
 	begin_asleep := 0
@@ -64,13 +64,13 @@ func get_guard(time_asleep map[string]int) string {
 	sleepiest_guard := ""
 	max_time := 0
 
-	for guard, time := range time_asleep { 
-    	if time > max_time {
-    		sleepiest_guard = guard
-    		max_time = time
-    	}
+	for guard, time := range time_asleep {
+		if time > max_time {
+			sleepiest_guard = guard
+			max_time = time
+		}
 	}
-	
+
 	return sleepiest_guard[1:]
 }
 
@@ -95,7 +95,7 @@ func get_guard_lines(guard string, lines []string) []string {
 
 func get_minute_count(lines []string) map[int]int {
 	minute_count := make(map[int]int)
-    begin_asleep := 0
+	begin_asleep := 0
 
 	for _, line := range lines {
 
@@ -103,7 +103,7 @@ func get_minute_count(lines []string) map[int]int {
 		time := strings.Split(date, " ")[1]
 		minute, _ := strconv.Atoi(time[3:5])
 		text := line[19:len(line)]
-		
+
 		if strings.HasPrefix(text, "Guard") {
 			begin_asleep = 0
 		} else if text == "falls asleep" {
@@ -122,13 +122,13 @@ func get_minute(minute_count map[int]int) int {
 	sleepiest_minute := 0
 	max_count := 0
 
-	for minute, count := range minute_count { 
-    	if count > max_count {
-    		sleepiest_minute = minute
-    		max_count = count
-    	}
+	for minute, count := range minute_count {
+		if count > max_count {
+			sleepiest_minute = minute
+			max_count = count
+		}
 	}
-	
+
 	return sleepiest_minute
 }
 
@@ -148,6 +148,6 @@ func main() {
 	sleepiest_minute := get_minute(minute_count)
 
 	guard_id, _ := strconv.Atoi(sleepiest_guard)
-	fmt.Print(guard_id * sleepiest_minute, "\n")
+	fmt.Print(guard_id*sleepiest_minute, "\n")
 
 }
