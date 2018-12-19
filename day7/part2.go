@@ -1,24 +1,13 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"sort"
 	"strings"
+    "adventofgo/helpers"
 )
 
 // input: ["X must come before Y", ...]
-
-// helper for `if a in list`
-func stringInSlice(a string, list []string) bool {
-	for _, b := range list {
-		if b == a {
-			return true
-		}
-	}
-	return false
-}
 
 func getMin(letters map[string]bool) string {
 	minLetter := "Z"
@@ -32,23 +21,6 @@ func getMin(letters map[string]bool) string {
 		}
 	}
 	return minLetter
-}
-
-func getLines() []string {
-	file, err := os.Open("input.txt")
-	if err != nil {
-		fmt.Print(err)
-	}
-
-	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanLines)
-
-	var lines []string
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	return lines
 }
 
 func extractInfo(lines []string) ([]string, map[string][]string, map[string]int) {
@@ -145,7 +117,7 @@ func toposort(first []string, unlocks map[string][]string, dependencies map[stri
 }
 
 func main() {
-	var data []string = getLines()
+	var data []string = helpers.GetLines()
 
 	/*
 	   data := []string{"Step C must be finished before step A can begin.",
