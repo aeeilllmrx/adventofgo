@@ -8,13 +8,22 @@ import (
 )
 
 // helper to check if string is in a slice
-func StringInSlice(a string, list []string) bool {
-    for _, b := range list {
+func StringInSlice(a string, slice []string) bool {
+    for _, b := range slice {
         if b == a {
             return true
         }
     }
     return false
+}
+
+func IntIndexSlice(value int, slice []int) int {
+    for i, v := range slice {
+        if (v == value) {
+            return i
+        }
+    }
+    return -1
 }
 
 // reads input file and turns into a slice of strings
